@@ -366,7 +366,8 @@ INNER JOIN Income inc ON e.employment_id = inc.employment_id
 
 CREATE OR REPLACE VIEW CustomerAccountsView AS
 SELECT *
-FROM Loan
+FROM Loan l
+INNER JOIN LoanTypes lt ON l.loan_type_id = lt.type_id
 
 
 
