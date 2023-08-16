@@ -248,4 +248,31 @@ VALUES
 	('Monthly', 12),
 	('Quaterly', 4),
 	('Yearly', 1);
-	
+
+-- Create a view for calculating DTI ratio
+CREATE OR REPLACE VIEW DTIRatioView AS
+SELECT
+    inc.customer_id,
+    ROUND((COALESCE(lp.total_monthly_payment, 0) + COALESCE(hp.total_monthly_payment, 0))) AS total_monthly_debt,
+    inc.amount,
+    ROUND((COALESCE(lp.total_monthly_payment, 0) + COALESCE(hp.total_monthly_payment, 0)) / inc.amount, 2) AS dti_ratio
+FROM
+    Income inc
+LEFT JOIN (
+    SELECT
+        customer_id,
+        SUM(monthly_payment) AS total_monthly_payment
+    FROM
+        HomePayment
+    GROUP BY
+        customer_id
+) hp ON inc.customer_id = hp.customer_id
+LEFT JOIN (
+    SELECT
+        customer_id,
+        SUM(loan_amount / loan_term) AS total_monthly_payment
+    FROM
+        Loan
+    GROUP BY
+        customer_id
+) lp ON inc.customer_id = lp.customer_id;
