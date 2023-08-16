@@ -45,3 +45,11 @@ SELECT * FROM EmploymentInfoView WHERE customer_id = 1;
 </pre>
 
 
+4. Customer Accounts View - will return `loan_id`, `customer_id`, `date_opened`, `loan_amount`, `interest_rate`, `loan_term`, `loan_type_id`, `credit_utilization_ratio`, `amount_paid`, `number_of_payments`, `days_late_30`, `days_late_60`, `days_90_plus`
+<pre>
+<code>
+SELECT * FROM CustomerAccountsView WHERE customer_id = 1;
+</code>
+</pre>
+
+
