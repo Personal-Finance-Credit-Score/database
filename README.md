@@ -29,3 +29,10 @@ SELECT * FROM DTIRatioView WHERE customer_id = 1;
 SELECT * FROM AverageCreditScoresView WHERE customer_id = 1;
 </code>
 </pre>
+
+2. Landing Page View - will return `customer_id`, `transunion_score`, `equifax_score`, `experian_score`, `total_debt`, `credit_usage`, `derogatory_marks`, `credit_age_months`, `hard_inquiries`, `payment_history`, `credit_card_use`, `total_accounts`
+<pre>
+<code>
+SELECT * FROM LandingPageView WHERE customer_id = 1;
+</code>
+</pre>
