@@ -26,6 +26,6 @@ SELECT * FROM DTIRatioView WHERE customer_id = 1;
 2. Credit Score Formula - will return `customer_id`, `avg_credit_score`
 <pre>
 <code>
-SELECT * FROM AverageCreditScores WHERE customer_id = 1;
+SELECT * FROM AverageCreditScoresView WHERE customer_id = 1;
 </code>
 </pre>

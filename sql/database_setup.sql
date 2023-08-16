@@ -280,7 +280,7 @@ LEFT JOIN (
 
 
 -- Create a view for Average Credit Score formula
-CREATE VIEW AverageCreditScores AS
+CREATE VIEW AverageCreditScoresView AS
 SELECT
     l.customer_id,
     ROUND(AVG(
@@ -301,7 +301,7 @@ JOIN
     LoanTypes lt ON l.loan_type_id = lt.type_id
 GROUP BY
     l.customer_id;
-    
+
 
 INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zip) VALUES (1, '421 Roger Street Apt. 479', 'None', 'Fernandezmouth', 'PR', '91047');
 INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zip) VALUES (2, '50626 Susan Mountain', 'Apt. 374', 'West Williamland', 'OR', '75920');
