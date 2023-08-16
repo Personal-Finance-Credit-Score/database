@@ -177,9 +177,10 @@ CREATE TABLE Income (
 -- Create a table to store historical credit scores
 CREATE TABLE HistoricalCreditScores (
     score_id SERIAL PRIMARY KEY,
-    customer_id INT,
-    credit_score INT,
-    timestamp TIMESTAMP,
+    customer_id INT NOT NULL,
+    credit_bureau VARCHAR(50) NOT NULL,
+    credit_score INT NOT NULL,
+    timestamp TIMESTAMP NOT NULL,
     FOREIGN KEY (customer_id) REFERENCES Customer(customer_id)
 );
 
