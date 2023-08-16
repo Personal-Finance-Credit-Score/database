@@ -276,3 +276,24 @@ LEFT JOIN (
     GROUP BY
         customer_id
 ) lp ON inc.customer_id = lp.customer_id;
+
+INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zip) VALUES (1, '421 Roger Street Apt. 479', 'None', 'Fernandezmouth', 'PR', '91047');
+INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zip) VALUES (2, '50626 Susan Mountain', 'Apt. 374', 'West Williamland', 'OR', '75920');
+INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zip) VALUES (3, '7449 Hanna Neck', 'None', 'West Annaland', 'NC', '08277');
+INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zip) VALUES (4, '06353 Roberson Bridge', 'Suite 562', 'Jonesland', 'NE', '56126');
+INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zip) VALUES (5, '462 Castro Underpass Suite 497', 'None', 'Webbburgh', 'DC', '56405');
+INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zip) VALUES (6, '9419 Jacqueline Roads', 'Apt. 689', 'Hartmanhaven', 'VT', '83936');
+INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zip) VALUES (7, '9503 Christopher Valleys Apt. 532', 'Suite 294', 'Cassandraside', 'SC', '19368');
+INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zip) VALUES (8, '7851 Jacqueline Stravenue', 'None', 'Hudsonville', 'MH', '44096');
+INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zip) VALUES (9, '662 Smith Run Suite 568', 'Suite 512', 'Donaldshire', 'NH', '28280');
+INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zip) VALUES (10, '46387 Gutierrez Brook', 'None', 'East Amber', 'ND', '75899');
+INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zip) VALUES (11, '999 Veronica Manor', 'Apt. 485', 'Carlland', 'WI', '25537');
+INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zip) VALUES (12, '0401 Russell Station Suite 214', 'Suite 589', 'Aliciamouth', 'LA', '63663');
+INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zip) VALUES (13, '23267 Robert Point', 'None', 'Sheppardport', 'AK', '75905');
+INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zip) VALUES (14, '937 David Village', 'Suite 753', 'Lake John', 'HI', '66282');
+INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zip) VALUES (15, '90634 West Gardens Apt. 971', 'Apt. 846', 'Jamiefort', 'GA', '98159');
+INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zip) VALUES (16, '157 John Spurs', 'None', 'Lake Julialand', 'AL', '37686');
+INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zip) VALUES (17, '797 Kevin Isle Apt. 199', 'Apt. 391', 'North Aaronfort', 'NH', '49324');
+INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zip) VALUES (18, '8328 Cannon Mews Suite 568', 'None', 'Lindseyberg', 'RI', '27868');
+INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zip) VALUES (19, '85945 William Greens', 'Apt. 065', 'Port Glennland', 'WI', '62001');
+INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zip) VALUES (20, '10971 Franklin Lakes', 'None', 'New Ryanborough', 'MS', '32366');
