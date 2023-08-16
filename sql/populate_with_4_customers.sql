@@ -25,9 +25,9 @@ INSERT INTO Loan (loan_id, customer_id, loan_amount, interest_rate, loan_term, l
 INSERT INTO Loan (loan_id, customer_id, loan_amount, interest_rate, loan_term, loan_type_id, credit_utilization_ratio, amount_paid, number_of_payments, days_late_30, days_late_60, days_90_plus, date_opened) VALUES (20, 1, 29075.23, 4.82, 29, 2, 0.5, 14500.81, 14, 1, 1, 1, '2022-06-22');
 
 
-INSERT INTO PersonalDetails (customer_id, first_name, last_name, birthdate, gender_id, marital_id, education_id, employment_id, current_address_id)
+INSERT INTO PersonalDetails (customer_id, first_name, last_name, birthdate, gender_id, marital_id, education_id, current_address_id)
 VALUES
-    (1, 'Michael', 'Johnson', '1938-01-22', 1, 2, 3, 1, 1);
+    (1, 'Michael', 'Johnson', '1938-01-22', 1, 2, 3, 1);
 
 
 INSERT INTO HomePayment (customer_id, is_rent, monthly_payment)
