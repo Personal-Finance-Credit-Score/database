@@ -303,6 +303,48 @@ GROUP BY
     l.customer_id;
 
 
+CREATE OR REPLACE VIEW LandingPageView AS
+WITH TransunionScores AS (
+    SELECT DISTINCT ON (customer_id) customer_id, credit_score AS score
+    FROM HistoricalCreditScores
+    WHERE credit_bureau = 'Transunion'
+    ORDER BY customer_id, timestamp DESC
+),
+EquifaxScores AS (
+    SELECT DISTINCT ON (customer_id) customer_id, credit_score AS score
+    FROM HistoricalCreditScores
+    WHERE credit_bureau = 'Equifax'
+    ORDER BY customer_id, timestamp DESC
+),
+ExperianScores AS (
+    SELECT DISTINCT ON (customer_id) customer_id, credit_score AS score
+    FROM HistoricalCreditScores
+    WHERE credit_bureau = 'Experian'
+    ORDER BY customer_id, timestamp DESC
+)
+SELECT
+    l.customer_id,
+    ts.score AS transunion_score,
+    es.score AS equifax_score,
+    xs.score AS experian_score,
+    SUM(CASE WHEN l.payment_history IS NOT NULL THEN (l.loan_amount - l.payment_history) ELSE l.loan_amount END) AS total_debt,
+    ROUND(SUM(l.credit_utilization_ratio) / COUNT(l.loan_id), 2) AS credit_usage,
+    0 AS derogatory_marks,
+    ROUND(AVG(EXTRACT(MONTH FROM AGE(CURRENT_DATE, l.date_opened))), 2) AS credit_age_months,
+    COUNT(ci.id) AS hard_inquiries,
+    (COALESCE(SUM(l.days_late_30), 0) + COALESCE(SUM(l.days_late_60), 0) + COALESCE(SUM(l.days_90_plus), 0)) / NULLIF(SUM(l.number_of_payments), 0) AS payment_history,
+    ROUND(SUM(CASE WHEN l.loan_type_id = 4 THEN l.credit_utilization_ratio ELSE 0 END) / NULLIF(COUNT(CASE WHEN l.loan_type_id = 4 THEN 1 END), 0), 2) AS credit_card_use,
+    COUNT(l.loan_id) AS total_accounts
+FROM
+    Loan l
+LEFT JOIN TransunionScores ts ON l.customer_id = ts.customer_id
+LEFT JOIN EquifaxScores es ON l.customer_id = es.customer_id
+LEFT JOIN ExperianScores xs ON l.customer_id = xs.customer_id
+LEFT JOIN CreditInquiries ci ON l.customer_id = ci.customer_id
+GROUP BY
+    l.customer_id, ts.score, es.score, xs.score;
+
+
 INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zip) VALUES (1, '421 Roger Street Apt. 479', 'None', 'Fernandezmouth', 'PR', '91047');
 INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zip) VALUES (2, '50626 Susan Mountain', 'Apt. 374', 'West Williamland', 'OR', '75920');
 INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zip) VALUES (3, '7449 Hanna Neck', 'None', 'West Annaland', 'NC', '08277');
