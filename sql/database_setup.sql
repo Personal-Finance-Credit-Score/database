@@ -254,7 +254,7 @@ CREATE OR REPLACE VIEW DTIRatioView AS
 SELECT
     inc.customer_id,
     ROUND((COALESCE(lp.total_monthly_payment, 0) + COALESCE(hp.total_monthly_payment, 0))) AS total_monthly_debt,
-    inc.amount,
+    inc.amount AS income,
     ROUND((COALESCE(lp.total_monthly_payment, 0) + COALESCE(hp.total_monthly_payment, 0)) / inc.amount, 2) AS dti_ratio
 FROM
     Income inc
