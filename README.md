@@ -36,3 +36,12 @@ SELECT * FROM AverageCreditScoresView WHERE customer_id = 1;
 SELECT * FROM LandingPageView WHERE customer_id = 1;
 </code>
 </pre>
+
+3. Employment Info View - will return `employment_id`, `address_line_1`	`address_line_2`, `city`, `state`, `zipcode`, `name`
+<pre>
+<code>
+SELECT * FROM EmploymentInfoView WHERE customer_id = 1;
+</code>
+</pre>
+
+
