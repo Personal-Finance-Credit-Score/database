@@ -32,7 +32,6 @@ VALUES
 
 
 
-
 INSERT INTO Income (customer_id, source, amount, frequency_id, employment_id)
 VALUES
 	(1, 'full-time', 20000, 1, 1);
