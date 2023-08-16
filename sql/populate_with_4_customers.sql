@@ -26,9 +26,16 @@ VALUES
 	(1, False, 2000);
 
 
-INSERT INTO Income (customer_id, source, amount, frequency_id)
+INSERT INTO Employment (address_line_1, address_line_2, city, state, zipcode, employment_type_id) 
+VALUES 
+('10971 Franklin Lakes', 'None', 'New Ryanborough', 'MS', '32366', 1);
+
+
+
+
+INSERT INTO Income (customer_id, source, amount, frequency_id, employment_id)
 VALUES
-	(1, 'full-time', 40000, 1);
+	(1, 'full-time', 20000, 1, 1);
 
 
 -- Assuming today's date is '2023-08-03'
@@ -51,3 +58,7 @@ FROM
     CreditScoreData csd
 CROSS JOIN
     (VALUES ('Transunion'), ('Equifax'), ('Experian')) AS bureaus(credit_bureau);
+
+
+
+
