@@ -278,6 +278,31 @@ LEFT JOIN (
         customer_id
 ) lp ON inc.customer_id = lp.customer_id;
 
+
+-- Create a view for Average Credit Score formula
+CREATE VIEW AverageCreditScores AS
+SELECT
+    l.customer_id,
+    ROUND(AVG(
+        (
+            (inc.amount / 10000) * 0.4 +             -- Income contributes 40%
+            CASE WHEN lt.loan_type = 'credit-card-loan'
+                THEN (l.loan_amount / 1000) * 0.3 -- Credit limit contributes 30%
+                ELSE (l.loan_amount / 1000) * 0.3 -- Loan amount contributes 30%
+            END +
+            (1 - ((COALESCE(l.days_late_30, 0)/30) + (COALESCE(l.days_late_60, 0)/60) + (COALESCE(l.days_90_plus, 0) / 90))) * 0.1 -- Payment delay contributes 10%
+        ) * 100
+    )) AS avg_credit_score
+FROM
+    Loan l
+JOIN
+    Income inc ON l.customer_id = inc.customer_id
+JOIN
+    LoanTypes lt ON l.loan_type_id = lt.type_id
+GROUP BY
+    l.customer_id;
+    
+
 INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zip) VALUES (1, '421 Roger Street Apt. 479', 'None', 'Fernandezmouth', 'PR', '91047');
 INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zip) VALUES (2, '50626 Susan Mountain', 'Apt. 374', 'West Williamland', 'OR', '75920');
 INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zip) VALUES (3, '7449 Hanna Neck', 'None', 'West Annaland', 'NC', '08277');
