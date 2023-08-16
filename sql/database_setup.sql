@@ -164,6 +164,7 @@ CREATE TABLE IncomeFrequency (
 -- Create Employment table
 CREATE TABLE Employment (
     employment_id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
     address_line_1 VARCHAR(100) NOT NULL,
     address_line_2 VARCHAR(10),
     city VARCHAR(50) NOT NULL,

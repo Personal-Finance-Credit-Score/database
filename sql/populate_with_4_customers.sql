@@ -26,9 +26,9 @@ VALUES
 	(1, False, 2000);
 
 
-INSERT INTO Employment (address_line_1, address_line_2, city, state, zipcode, employment_type_id) 
+INSERT INTO Employment (address_line_1, address_line_2, city, state, zipcode, employment_type_id, name) 
 VALUES 
-('10971 Franklin Lakes', 'None', 'New Ryanborough', 'MS', '32366', 1);
+('10971 Franklin Lakes', 'None', 'New Ryanborough', 'MS', '32366', 1, 'Lime Apple LLC');
 
 
 
