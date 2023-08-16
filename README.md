@@ -16,9 +16,16 @@ psql -d your_database_name -f database_setup.sql
 </pre>
 
 ## Preb-Built View List
-1. DTI - this view will return `customer_id`, `total_monthly_debt`, `income`, `dti_ratio`
+1. DTI - will return `customer_id`, `total_monthly_debt`, `income`, `dti_ratio`
 <pre>
 <code>
 SELECT * FROM DTIRatioView WHERE customer_id = 1;
+</code>
+</pre>
+
+2. Credit Score Formula - will return `customer_id`, `avg_credit_score`
+<pre>
+<code>
+SELECT * FROM AverageCreditScores WHERE customer_id = 1;
 </code>
 </pre>
