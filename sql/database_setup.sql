@@ -359,6 +359,18 @@ GROUP BY
     l.customer_id, ts.score, es.score, xs.score;
 
 
+CREATE OR REPLACE VIEW EmploymentInfoView AS
+SELECT *
+FROM Employment e
+INNER JOIN Income inc ON e.employment_id = inc.employment_id
+
+
+
+
+
+
+
+
 INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zipcode) VALUES (1, '421 Roger Street Apt. 479', 'None', 'Fernandezmouth', 'PR', '91047');
 INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zipcode) VALUES (2, '50626 Susan Mountain', 'Apt. 374', 'West Williamland', 'OR', '75920');
 INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zipcode) VALUES (3, '7449 Hanna Neck', 'None', 'West Annaland', 'NC', '08277');
