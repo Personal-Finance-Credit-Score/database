@@ -44,7 +44,7 @@ CREATE TABLE AddressBook (
     address_line_2 VARCHAR(200),
     city VARCHAR(100) NOT NULL,
     state VARCHAR(50) NOT NULL,
-    zip VARCHAR(20) NOT NULL
+    zipcode INT NOT NULL
 );
 
 -- Create Personal Details table with birthdate
@@ -57,13 +57,11 @@ CREATE TABLE PersonalDetails (
     gender_id INT NOT NULL,
     marital_id INT NOT NULL,
     education_id INT NOT NULL,
-    employment_id INT NOT NULL,
     current_address_id INT NOT NULL,
     FOREIGN KEY (customer_id) REFERENCES Customer(customer_id),
     FOREIGN KEY (gender_id) REFERENCES GenderTypes(type_id),
     FOREIGN KEY (marital_id) REFERENCES MaritalTypes(type_id),
     FOREIGN KEY (education_id) REFERENCES EducationTypes(type_id),
-    FOREIGN KEY (employment_id) REFERENCES EmploymentTypes(type_id),
     FOREIGN KEY (current_address_id) REFERENCES AddressBook(address_id)
 );
 
@@ -163,6 +161,19 @@ CREATE TABLE IncomeFrequency (
     frequency_digit INT NOT NULL
 );
 
+-- Create Employment table
+CREATE TABLE Employment (
+    employment_id SERIAL PRIMARY KEY,
+    address_line_1 VARCHAR(100) NOT NULL,
+    address_line_2 VARCHAR(10),
+    city VARCHAR(50) NOT NULL,
+    state VARCHAR(10) NOT NULL,
+    zipcode INT NOT NULL,
+    employment_type_id INT NOT NULL,
+    FOREIGN KEY (employment_type_id) REFERENCES EmploymentTypes(type_id)
+);
+
+
 -- Create Income table
 CREATE TABLE Income (
     income_id SERIAL PRIMARY KEY,
@@ -170,8 +181,10 @@ CREATE TABLE Income (
     source VARCHAR(100) NOT NULL,
     amount DECIMAL(100, 2) NOT NULL,
     frequency_id INT NOT NULL,
+    employment_id INT,
     FOREIGN KEY (customer_id) REFERENCES Customer(customer_id),
-    FOREIGN KEY (frequency_id) REFERENCES IncomeFrequency(frequency_id)
+    FOREIGN KEY (frequency_id) REFERENCES IncomeFrequency(frequency_id),
+    FOREIGN KEY (employment_id) REFERENCES Employment(employment_id)
 );
 
 -- Create a table to store historical credit scores
@@ -327,7 +340,7 @@ SELECT
     ts.score AS transunion_score,
     es.score AS equifax_score,
     xs.score AS experian_score,
-    SUM(CASE WHEN l.payment_history IS NOT NULL THEN (l.loan_amount - l.payment_history) ELSE l.loan_amount END) AS total_debt,
+    SUM(CASE WHEN l.amount_paid IS NOT NULL THEN (l.loan_amount - l.amount_paid) ELSE l.loan_amount END) AS total_debt,
     ROUND(SUM(l.credit_utilization_ratio) / COUNT(l.loan_id), 2) AS credit_usage,
     0 AS derogatory_marks,
     ROUND(AVG(EXTRACT(MONTH FROM AGE(CURRENT_DATE, l.date_opened))), 2) AS credit_age_months,
@@ -345,23 +358,23 @@ GROUP BY
     l.customer_id, ts.score, es.score, xs.score;
 
 
-INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zip) VALUES (1, '421 Roger Street Apt. 479', 'None', 'Fernandezmouth', 'PR', '91047');
-INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zip) VALUES (2, '50626 Susan Mountain', 'Apt. 374', 'West Williamland', 'OR', '75920');
-INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zip) VALUES (3, '7449 Hanna Neck', 'None', 'West Annaland', 'NC', '08277');
-INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zip) VALUES (4, '06353 Roberson Bridge', 'Suite 562', 'Jonesland', 'NE', '56126');
-INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zip) VALUES (5, '462 Castro Underpass Suite 497', 'None', 'Webbburgh', 'DC', '56405');
-INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zip) VALUES (6, '9419 Jacqueline Roads', 'Apt. 689', 'Hartmanhaven', 'VT', '83936');
-INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zip) VALUES (7, '9503 Christopher Valleys Apt. 532', 'Suite 294', 'Cassandraside', 'SC', '19368');
-INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zip) VALUES (8, '7851 Jacqueline Stravenue', 'None', 'Hudsonville', 'MH', '44096');
-INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zip) VALUES (9, '662 Smith Run Suite 568', 'Suite 512', 'Donaldshire', 'NH', '28280');
-INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zip) VALUES (10, '46387 Gutierrez Brook', 'None', 'East Amber', 'ND', '75899');
-INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zip) VALUES (11, '999 Veronica Manor', 'Apt. 485', 'Carlland', 'WI', '25537');
-INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zip) VALUES (12, '0401 Russell Station Suite 214', 'Suite 589', 'Aliciamouth', 'LA', '63663');
-INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zip) VALUES (13, '23267 Robert Point', 'None', 'Sheppardport', 'AK', '75905');
-INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zip) VALUES (14, '937 David Village', 'Suite 753', 'Lake John', 'HI', '66282');
-INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zip) VALUES (15, '90634 West Gardens Apt. 971', 'Apt. 846', 'Jamiefort', 'GA', '98159');
-INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zip) VALUES (16, '157 John Spurs', 'None', 'Lake Julialand', 'AL', '37686');
-INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zip) VALUES (17, '797 Kevin Isle Apt. 199', 'Apt. 391', 'North Aaronfort', 'NH', '49324');
-INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zip) VALUES (18, '8328 Cannon Mews Suite 568', 'None', 'Lindseyberg', 'RI', '27868');
-INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zip) VALUES (19, '85945 William Greens', 'Apt. 065', 'Port Glennland', 'WI', '62001');
-INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zip) VALUES (20, '10971 Franklin Lakes', 'None', 'New Ryanborough', 'MS', '32366');
+INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zipcode) VALUES (1, '421 Roger Street Apt. 479', 'None', 'Fernandezmouth', 'PR', '91047');
+INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zipcode) VALUES (2, '50626 Susan Mountain', 'Apt. 374', 'West Williamland', 'OR', '75920');
+INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zipcode) VALUES (3, '7449 Hanna Neck', 'None', 'West Annaland', 'NC', '08277');
+INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zipcode) VALUES (4, '06353 Roberson Bridge', 'Suite 562', 'Jonesland', 'NE', '56126');
+INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zipcode) VALUES (5, '462 Castro Underpass Suite 497', 'None', 'Webbburgh', 'DC', '56405');
+INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zipcode) VALUES (6, '9419 Jacqueline Roads', 'Apt. 689', 'Hartmanhaven', 'VT', '83936');
+INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zipcode) VALUES (7, '9503 Christopher Valleys Apt. 532', 'Suite 294', 'Cassandraside', 'SC', '19368');
+INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zipcode) VALUES (8, '7851 Jacqueline Stravenue', 'None', 'Hudsonville', 'MH', '44096');
+INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zipcode) VALUES (9, '662 Smith Run Suite 568', 'Suite 512', 'Donaldshire', 'NH', '28280');
+INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zipcode) VALUES (10, '46387 Gutierrez Brook', 'None', 'East Amber', 'ND', '75899');
+INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zipcode) VALUES (11, '999 Veronica Manor', 'Apt. 485', 'Carlland', 'WI', '25537');
+INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zipcode) VALUES (12, '0401 Russell Station Suite 214', 'Suite 589', 'Aliciamouth', 'LA', '63663');
+INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zipcode) VALUES (13, '23267 Robert Point', 'None', 'Sheppardport', 'AK', '75905');
+INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zipcode) VALUES (14, '937 David Village', 'Suite 753', 'Lake John', 'HI', '66282');
+INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zipcode) VALUES (15, '90634 West Gardens Apt. 971', 'Apt. 846', 'Jamiefort', 'GA', '98159');
+INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zipcode) VALUES (16, '157 John Spurs', 'None', 'Lake Julialand', 'AL', '37686');
+INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zipcode) VALUES (17, '797 Kevin Isle Apt. 199', 'Apt. 391', 'North Aaronfort', 'NH', '49324');
+INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zipcode) VALUES (18, '8328 Cannon Mews Suite 568', 'None', 'Lindseyberg', 'RI', '27868');
+INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zipcode) VALUES (19, '85945 William Greens', 'Apt. 065', 'Port Glennland', 'WI', '62001');
+INSERT INTO AddressBook (address_id, address_line_1, address_line_2, city, state, zipcode) VALUES (20, '10971 Franklin Lakes', 'None', 'New Ryanborough', 'MS', '32366');
