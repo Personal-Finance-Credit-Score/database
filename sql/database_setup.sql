@@ -86,7 +86,7 @@ CREATE TABLE Loan (
     loan_term INT NOT NULL,
     loan_type_id INT NOT NULL,
     credit_utilization_ratio DECIMAL(5, 2) NOT NULL,
-    payment_history DECIMAL(100, 2),
+    amount_paid DECIMAL(100, 2),
     number_of_payments INT,
     days_late_30 INT,
     days_late_60 INT,
